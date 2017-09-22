@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
 
   s.homepage     = "https://github.com/Hipo/prism-ios"
   s.license      = { :type => "MIT", :file => "LICENSE" }
-  s.author       = { "goktugberkulu" => "goktugberkulu@gmail.com" }
+  s.author       = { "Hipo" => "hello@hipolabs.com" }
   s.source       = { :git => "https://github.com/Hipo/prism-ios.git" }
   s.source_files = "Prism/Prism/Classes/**/*.{swift}"
 
