@@ -3,11 +3,11 @@ Pod::Spec.new do |s|
   s.platform = :ios
   s.ios.deployment_target = '8.0'
   s.name         = "Prism-iOS"
-  s.version      = "0.0.1"
-  s.summary      = "Prism image resizer iOS library."
+  s.version      = "1.0.0"
+  s.summary      = "URL builder iOS library for Prism image resizer."
 
   s.description  = <<-DESC
-                    Prism image resizer iOS library.
+                    URL builder iOS library for Prism image resizer.
                    DESC
 
   s.homepage     = "https://github.com/Hipo/prism-ios"
