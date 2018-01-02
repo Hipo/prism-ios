@@ -145,7 +145,7 @@ import UIKit
         self.baseURL = baseURL
     }
     
-    public init?(url: NSURL) {
+    public init(url: NSURL) {
         
         self.baseURL = url as URL
     }
