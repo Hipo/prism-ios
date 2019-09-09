@@ -9,15 +9,16 @@ contain “tryprism” or contains other queries, the method will return the bas
 
 ### URL Extension Decleration
 ```swift
-func prismURL(quality: PrismOutputImageQuality = .none,
+func prismURL(quality: ImageQuality = .high,
               expectedSize: CGSize = .zero,
-              resizeMode: PrismOutputImageResizeMode = .none,
+              resizeMode: ImageResizeMode = .crop,
+              imageType: ImageType = .png,
               cropRect: CGRect = .zero,
-              imageType: PrismOutputImageType = .none,
+              premultiplied: Bool = true,
               preservedRatio: Bool? = nil,
-              premultiplied: Bool? = nil,
-              gravity: PrismOutputGravity = .none,
-              frameBackgroundColor: String? = nil) -> URL?
+              gravity: Gravity? = nil,
+              frameBackgroundColor: String? = nil
+) -> URL? {
 ```
 
 This method can be called through an URL instance.
@@ -34,7 +35,7 @@ public func setResizeMode(_ resizeMode: PrismOutputImageResizeMode) -> PrismURL
 public func setCropRect(_ cropRect: CGRect) -> PrismURL
 public func setImageType(_ imageType: PrismOutputImageType) -> PrismURL
 public func setPreservedRatio(_ preservedRatio: Bool?) -> PrismURL
-public func setPremultiplied(_ premultiplied: Bool?) -> PrismURL
+public func setPremultiplied(_ premultiplied: Bool) -> PrismURL
 public func setGravity(_ gravity: PrismOutputGravity) -> PrismURL
 public func setFrameBackgroundColor(_ backgroundColor: String?) -> PrismURL
 ```
