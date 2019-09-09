@@ -9,147 +9,56 @@
 import Foundation
 import UIKit
 
-@objc public enum PrismOutputImageQuality: Int, RawRepresentable {
-    public typealias RawValue = String
-    
-    case high
-    case normal
-    case low
-    
-    public var rawValue: RawValue {
-        switch self {
-        case .high:
-            return "100"
-        case .normal:
-            return "70"
-        case .low:
-            return "50"
-        }
-    }
-    
-    public init?(rawValue: RawValue) {
-        switch rawValue {
-        case "100":
-            self = .high
-        case "70":
-            self = .normal
-        case "50":
-            self = .low
-        default:
-            self = .normal
-        }
-    }
-}
-
-@objc public enum PrismOutputImageType: Int, RawRepresentable {
-    public typealias RawValue = String
-    
-    case png
-    case jpg
-    
-    public var rawValue: RawValue {
-        switch self {
-        case .png:
-            return "png"
-        case .jpg:
-            return "jpg"
-        }
-    }
-    
-    public init?(rawValue: RawValue) {
-        switch rawValue {
-        case "jpg":
-            self = .jpg
-        case "png":
-            self = .png
-        default:
-            self = .jpg
-        }
-    }
-}
-
-@objc public enum PrismOutputImageResizeMode: Int, RawRepresentable {
-    public typealias RawValue = String
-    
-    case resize
-    case fit
-    case crop
-    
-    public var rawValue: RawValue {
-        switch self {
-        case .resize:
-            return "resize"
-        case .fit:
-            return "resize_then_fit"
-        case .crop:
-            return "resize_then_crop"
-        }
-    }
-    
-    public init?(rawValue: RawValue) {
-        switch rawValue {
-        case "resize":
-            self = .resize
-        case "resize_then_fit":
-            self = .fit
-        case "resize_then_crop":
-            self = .crop
-        default:
-            self = .resize
-        }
-    }
-}
-
-@objc public enum PrismOutputGravity: Int, RawRepresentable {
-    public typealias RawValue = String
-    
-    case topLeft
-    case center
-    
-    public var rawValue: RawValue {
-        switch self {
-        case .topLeft:
-            return "top_left"
-        case .center:
-            return "center"
-        }
-    }
-    
-    public init?(rawValue: RawValue) {
-        switch rawValue {
-        case "top_left":
-            self = .topLeft
-        case "center":
-            self = .center
-        default:
-            self = .center
-        }
-    }
-}
-
-@objc public class PrismURL: NSObject {
-    
+@objc
+public class PrismURL: NSObject {
     var baseURL: URL?
-    var quality = PrismOutputImageQuality.normal
+    
+    /// Sets the quality of image. Default value is high.
+    var quality = ImageQuality.high
+    
+    /// Sets the output size of image. Accepts CGSize with width and height as parameter. Default value of the parameter is 320x320.
     var expectedSize = CGSize.zero
-    var resizeMode: PrismOutputImageResizeMode?
-    var cropRect: CGRect?
-    var imageType: PrismOutputImageType?
+    
+    /// Sets the resize mode of an image. Default value is crop.
+    var resizeMode = ImageResizeMode.crop
+    
+    /// Determines the rectange area that will be cropped according to resize mode. Receives CGRect as parameter.
+    var cropRect = CGRect.zero
+    
+    /// Set type of output image. Options are.png and .jpg. Default value is png.
+    var imageType = ImageType.png
+    
+    /// Determines whether ratio of the image will be preserved while resizing or not. Default value is nil.
     var isPreservingRatio: Bool?
-    var isPremultiplied: Bool?
-    var gravity: PrismOutputGravity?
+    
+    /// Configures the png image with transparent background. Default value is true.
+    var isPremultiplied = true
+    
+    /// Decides crop focus wit options top left and center. Default value is nil.
+    var gravity: Gravity?
+    
+    /// Receives frame background color as String in format of hex to set the image frame background color. Default value is nil.
     var frameBackgroundColor: String?
     
+    // MARK: Initialization
     
     public init(baseURL: URL) {
         self.baseURL = baseURL
     }
     
     public init(url: NSURL) {
-        
         self.baseURL = url as URL
     }
-    
+}
+
+// MARK: API
+
+extension PrismURL {
+    /// Creates a `URL` using the base URL and checks whether it is prism url.
+    /// Adds image type, expected size, resize mode, quality, crop frame, ratio preservation, premultiplied value,
+    /// gravity, and background color to the url.
+    ///
+    /// - returns: The created `URL` from PrismURL.
     public func build() -> URL? {
         guard let url = baseURL,
             let host = url.host else {
@@ -167,20 +76,18 @@ import UIKit
         var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
         var queryParameters = [URLQueryItem]()
         
-        if let imageType = imageType {
-            let imageTypeQueryItem = URLQueryItem(name: "out", value: imageType.rawValue)
-            queryParameters.append(imageTypeQueryItem)
-        }
+        let imageTypeQueryItem = URLQueryItem(name: PrismConstants.type, value: imageType.rawValue)
+        queryParameters.append(imageTypeQueryItem)
         
         if let width = scaleWidthOfOutputImage() {
-            let widthQueryItem = URLQueryItem(name: "w", value: width)
+            let widthQueryItem = URLQueryItem(name: PrismConstants.width, value: width)
             queryParameters.append(widthQueryItem)
         } else {
             return nil
         }
         
         if let height = scaleHeightOfOutputImage() {
-            let heightQueryItem = URLQueryItem(name: "h", value: height)
+            let heightQueryItem = URLQueryItem(name: PrismConstants.height, value: height)
             queryParameters.append(heightQueryItem)
         } else {
             return nil
@@ -190,53 +97,52 @@ import UIKit
             return nil
         }
         
-        if let resizeMode = resizeMode {
-            let resizeQueryItem = URLQueryItem(name: "cmd", value: resizeMode.rawValue)
-            queryParameters.append(resizeQueryItem)
-        }
+        let resizeQueryItem = URLQueryItem(name: PrismConstants.resizeMode, value: resizeMode.rawValue)
+        queryParameters.append(resizeQueryItem)
         
-        let qualityQueryItem = URLQueryItem(name: "quality", value: quality.rawValue)
+        let qualityQueryItem = URLQueryItem(name: PrismConstants.quality, value: quality.rawValue)
         queryParameters.append(qualityQueryItem)
         
-        if let cropRect = cropRect, !cropRect.isEmpty {
-            let cropRectXQueryItem = URLQueryItem(name: "crop_x", value: "\(Int(cropRect.origin.x))")
+        if !cropRect.isEmpty {
+            let cropRectXQueryItem = URLQueryItem(name: PrismConstants.cropX, value: "\(Int(cropRect.origin.x))")
             queryParameters.append(cropRectXQueryItem)
             
-            let cropRectYQueryItem = URLQueryItem(name: "crop_y", value: "\(Int(cropRect.origin.y))")
+            let cropRectYQueryItem = URLQueryItem(name: PrismConstants.cropY, value: "\(Int(cropRect.origin.y))")
             queryParameters.append(cropRectYQueryItem)
             
-            let cropRectWidthQueryItem = URLQueryItem(name: "crop_width", value: "\(Int(cropRect.size.width))")
+            let cropRectWidthQueryItem = URLQueryItem(name: PrismConstants.cropWidth, value: "\(Int(cropRect.size.width))")
             queryParameters.append(cropRectWidthQueryItem)
             
-            let cropRectHeightQueryItem = URLQueryItem(name: "crop_height", value: "\(Int(cropRect.size.height))")
+            let cropRectHeightQueryItem = URLQueryItem(name: PrismConstants.cropHeight, value: "\(Int(cropRect.size.height))")
             queryParameters.append(cropRectHeightQueryItem)
         }
         
         if let isPreservingRatio = isPreservingRatio {
-            let isPreservingRatioQueryItem = URLQueryItem(name: "preserve_ratio", value: isPreservingRatio ? "1" : "0")
+            let isPreservingRatioQueryItem = URLQueryItem(name: PrismConstants.ratioPreservation, value: isPreservingRatio ? "1" : "0")
             queryParameters.append(isPreservingRatioQueryItem)
         }
         
-        if let isPremultiplied = isPremultiplied {
-            let isPremultipliedQueryItem = URLQueryItem(name: "premultiplied", value: isPremultiplied ? "1" : "0")
-            queryParameters.append(isPremultipliedQueryItem)
-        }
-        
+        let isPremultipliedQueryItem = URLQueryItem(name: PrismConstants.premultiplied, value: isPremultiplied ? "1" : "0")
+        queryParameters.append(isPremultipliedQueryItem)
         
         if let gravity = gravity {
-            let gravityQueryItem = URLQueryItem(name: "gravity", value: gravity.rawValue)
+            let gravityQueryItem = URLQueryItem(name: PrismConstants.gravity, value: gravity.rawValue)
             queryParameters.append(gravityQueryItem)
         }
         
         if let frameBackgroundColor = frameBackgroundColor {
-            let frameBackgrounColorQueryItem = URLQueryItem(name: "frame_bg_color", value: frameBackgroundColor)
+            let frameBackgrounColorQueryItem = URLQueryItem(name: PrismConstants.backgroundColor, value: frameBackgroundColor)
             queryParameters.append(frameBackgrounColorQueryItem)
         }
         
         urlComponents?.queryItems = queryParameters
         return urlComponents?.url
     }
-    
+}
+
+// MARK: Helpers {
+
+extension PrismURL {
     private func scaleWidthOfOutputImage() -> String? {
         let screenScale = UIScreen.main.scale
         
@@ -270,95 +176,101 @@ import UIKit
         let stringValueOfHeight = "\(Int(expectedSize.height))"
         return stringValueOfHeight
     }
-    
-    public func setImageQuality(_ quality: PrismOutputImageQuality) -> PrismURL {
+}
+
+// MARK: Set Prism
+
+extension PrismURL {
+    /// Sets image quality of a PrismURL.
+    ///
+    /// - parameter quality: ImageQuality. quality value from ImageQuality enum.
+    ///
+    /// - returns: PrismURL with image quality.
+    public func setImageQuality(_ quality: ImageQuality) -> PrismURL {
         self.quality = quality
         return self
     }
     
+    /// Sets expected image size of a PrismURL.
+    ///
+    /// - parameter expectedSize: CGSize. expectedSize of the image.
+    ///
+    /// - returns: PrismURL with expected width and height.
     public func setExpectedImageSize(_ expectedSize: CGSize) -> PrismURL {
         self.expectedSize = expectedSize
         return self
     }
     
-    public func setResizeMode(_ resizeMode: PrismOutputImageResizeMode?) -> PrismURL {
+    /// Sets resize mode of a PrismURL.
+    ///
+    /// - parameter resizeMode: ImageResizeMode. resizeMode value from ImageResizeMode enum.
+    ///
+    /// - returns: PrismURL with resize mode.
+    public func setResizeMode(_ resizeMode: ImageResizeMode) -> PrismURL {
         self.resizeMode = resizeMode
         return self
     }
     
-    public func setCropRect(_ cropRect: CGRect?) -> PrismURL {
+    /// Sets crop rect value of a PrismURL.
+    ///
+    /// - parameter cropRect: CGRect. cropRect value of image.
+    ///
+    /// - returns: PrismURL with crop rect.
+    public func setCropRect(_ cropRect: CGRect) -> PrismURL {
         self.cropRect = cropRect
         return self
     }
     
-    public func setImageType(_ imageType: PrismOutputImageType?) -> PrismURL {
+    /// Sets image type of a PrismURL.
+    ///
+    /// - parameter imageType: ImageType. imageType value from ImageType enum.
+    ///
+    /// - returns: PrismURL with image type.
+    public func setImageType(_ imageType: ImageType) -> PrismURL {
         self.imageType = imageType
         return self
     }
     
+    /// Sets preverse ratio option of a PrismURL.
+    ///
+    /// - parameter preservedRatio: Gravity. Optional preservedRatio value.
+    ///
+    /// - returns: PrismURL with preserved ratio check.
     public func setPreservedRatio(_ preservedRatio: Bool?) -> PrismURL {
         self.isPreservingRatio = preservedRatio
         return self
     }
 
-    public func setPremultiplied(_ premultiplied: Bool?) -> PrismURL {
+    /// Sets premultiplied value of a PrismURL.
+    ///
+    /// - parameter premultiplied: Bool.
+    ///
+    /// - returns: PrismURL with premultiplied value.
+    public func setPremultiplied(_ premultiplied: Bool) -> PrismURL {
         self.isPremultiplied = premultiplied
         return self
     }
     
-    public func setGravity(_ gravity: PrismOutputGravity?) -> PrismURL {
+    /// Sets gravity of a PrismURL.
+    ///
+    /// - parameter gravity: Gravity. Optional gravity value from Gravity enum.
+    ///
+    /// - returns: PrismURL with gravity.
+    public func setGravity(_ gravity: Gravity?) -> PrismURL {
         self.gravity = gravity
         return self
     }
     
+    /// Sets frame background color of a PrismURL.
+    ///
+    /// - parameter backgroundColor: String. Optional background color value as a hex color.
+    ///
+    /// - returns: PrismURL with background color.
     public func setImageFrameBackgroundColor(_ backgroundColor: String?) -> PrismURL {
         guard let frameBackgroundColor = backgroundColor else {
             return self
         }
         self.frameBackgroundColor = frameBackgroundColor.isValidHexNumber() ? frameBackgroundColor : nil
         return self
-    }
-    
-}
-
-public extension URL {
-    
-    func prismURL(quality: PrismOutputImageQuality = .normal,
-                  expectedSize: CGSize = .zero,
-                  resizeMode: PrismOutputImageResizeMode? = nil,
-                  cropRect: CGRect? = nil,
-                  imageType: PrismOutputImageType? = nil,
-                  preservedRatio: Bool? = nil,
-                  premultiplied: Bool? = nil,
-                  gravity: PrismOutputGravity? = nil,
-                  frameBackgroundColor: String? = nil) -> URL? {
-        let prismURL = PrismURL(baseURL: self)
-        return prismURL.setImageQuality(quality)
-            .setExpectedImageSize(expectedSize)
-            .setResizeMode(resizeMode)
-            .setCropRect(cropRect)
-            .setImageType(imageType)
-            .setPreservedRatio(preservedRatio)
-            .setPremultiplied(premultiplied)
-            .setGravity(gravity)
-            .setImageFrameBackgroundColor(frameBackgroundColor)
-            .build()
-    }
-}
-
-fileprivate extension String {
-    
-    fileprivate func isValidHexNumber() -> Bool {
-        let chars = CharacterSet(charactersIn: "0123456789ABCDEF")
-        
-        guard uppercased().rangeOfCharacter(from: chars) != nil else {
-            return false
-        }
-        
-        if count > 6 {
-            return false
-        }
-        
-        return true
     }
 }

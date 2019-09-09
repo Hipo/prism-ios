@@ -9,6 +9,13 @@
 /* Begin PBXBuildFile section */
 		2B89E9741F74D2280000A041 /* Prism.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B89E9721F74D2280000A041 /* Prism.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2B89E97E1F74D4A60000A041 /* PrismURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B89E97D1F74D4A60000A041 /* PrismURL.swift */; };
+		2BB0F0B123266F5D00D48FC4 /* URL+Prism.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB0F0B023266F5D00D48FC4 /* URL+Prism.swift */; };
+		2BB0F0B5232671EE00D48FC4 /* ImageQuality.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB0F0B4232671EE00D48FC4 /* ImageQuality.swift */; };
+		2BB0F0B72326720C00D48FC4 /* ImageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB0F0B62326720C00D48FC4 /* ImageType.swift */; };
+		2BB0F0B92326722400D48FC4 /* ImageResizeMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB0F0B82326722400D48FC4 /* ImageResizeMode.swift */; };
+		2BB0F0BB2326724B00D48FC4 /* Gravity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB0F0BA2326724B00D48FC4 /* Gravity.swift */; };
+		2BB0F0BD2326746200D48FC4 /* String+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB0F0BC2326746200D48FC4 /* String+Hex.swift */; };
+		2BB0F0BF2326899500D48FC4 /* PrismConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB0F0BE2326899500D48FC4 /* PrismConstants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -16,6 +23,13 @@
 		2B89E9721F74D2280000A041 /* Prism.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Prism.h; sourceTree = "<group>"; };
 		2B89E9731F74D2280000A041 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2B89E97D1F74D4A60000A041 /* PrismURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrismURL.swift; sourceTree = "<group>"; };
+		2BB0F0B023266F5D00D48FC4 /* URL+Prism.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Prism.swift"; sourceTree = "<group>"; };
+		2BB0F0B4232671EE00D48FC4 /* ImageQuality.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageQuality.swift; sourceTree = "<group>"; };
+		2BB0F0B62326720C00D48FC4 /* ImageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageType.swift; sourceTree = "<group>"; };
+		2BB0F0B82326722400D48FC4 /* ImageResizeMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResizeMode.swift; sourceTree = "<group>"; };
+		2BB0F0BA2326724B00D48FC4 /* Gravity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gravity.swift; sourceTree = "<group>"; };
+		2BB0F0BC2326746200D48FC4 /* String+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Hex.swift"; sourceTree = "<group>"; };
+		2BB0F0BE2326899500D48FC4 /* PrismConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrismConstants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,9 +72,40 @@
 		2B89E97C1F74D45F0000A041 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				2BB0F0C0232695DD00D48FC4 /* Constants */,
+				2BB0F0B3232671E000D48FC4 /* URLOptions */,
+				2BB0F0B2232670E700D48FC4 /* Extensions */,
 				2B89E97D1F74D4A60000A041 /* PrismURL.swift */,
 			);
 			path = Classes;
+			sourceTree = "<group>";
+		};
+		2BB0F0B2232670E700D48FC4 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				2BB0F0B023266F5D00D48FC4 /* URL+Prism.swift */,
+				2BB0F0BC2326746200D48FC4 /* String+Hex.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		2BB0F0B3232671E000D48FC4 /* URLOptions */ = {
+			isa = PBXGroup;
+			children = (
+				2BB0F0B4232671EE00D48FC4 /* ImageQuality.swift */,
+				2BB0F0B62326720C00D48FC4 /* ImageType.swift */,
+				2BB0F0B82326722400D48FC4 /* ImageResizeMode.swift */,
+				2BB0F0BA2326724B00D48FC4 /* Gravity.swift */,
+			);
+			path = URLOptions;
+			sourceTree = "<group>";
+		};
+		2BB0F0C0232695DD00D48FC4 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				2BB0F0BE2326899500D48FC4 /* PrismConstants.swift */,
+			);
+			path = Constants;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -101,7 +146,7 @@
 		2B89E9661F74D2280000A041 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 1030;
 				ORGANIZATIONNAME = Hipo;
 				TargetAttributes = {
 					2B89E96E1F74D2280000A041 = {
@@ -113,10 +158,11 @@
 			};
 			buildConfigurationList = 2B89E9691F74D2280000A041 /* Build configuration list for PBXProject "Prism" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 2B89E9651F74D2280000A041;
 			productRefGroup = 2B89E9701F74D2280000A041 /* Products */;
@@ -144,6 +190,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				2B89E97E1F74D4A60000A041 /* PrismURL.swift in Sources */,
+				2BB0F0BB2326724B00D48FC4 /* Gravity.swift in Sources */,
+				2BB0F0B5232671EE00D48FC4 /* ImageQuality.swift in Sources */,
+				2BB0F0B92326722400D48FC4 /* ImageResizeMode.swift in Sources */,
+				2BB0F0BD2326746200D48FC4 /* String+Hex.swift in Sources */,
+				2BB0F0B72326720C00D48FC4 /* ImageType.swift in Sources */,
+				2BB0F0B123266F5D00D48FC4 /* URL+Prism.swift in Sources */,
+				2BB0F0BF2326899500D48FC4 /* PrismConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -160,15 +213,23 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -198,6 +259,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -214,15 +276,23 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -244,6 +314,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -267,7 +338,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -286,7 +357,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.hipo.Prism;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -309,6 +380,7 @@
 				2B89E9791F74D2280000A041 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
