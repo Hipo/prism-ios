@@ -60,13 +60,8 @@ extension PrismURL {
     ///
     /// - returns: The created `URL` from PrismURL.
     public func build() -> URL? {
-        guard let url = baseURL,
-            let host = url.host else {
-                return nil
-        }
-        
-        if !host.contains("tryprism") {
-            return url
+        guard let url = baseURL else {
+            return nil
         }
         
         if let query = url.query, !query.isEmpty {
