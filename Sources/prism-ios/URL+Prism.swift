@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreGraphics
 
 public extension URL {
     /// Creates a `URL` using the base URL and adds configurations setted below.
