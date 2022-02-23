@@ -1,6 +1,6 @@
 //
 //  PrismURL.swift
-//  prism-ios
+//  Prism
 //
 //  Created by Göktuğ Berk Ulu on 21/09/2017.
 //  Copyright © 2017 Hipo. All rights reserved.

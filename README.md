@@ -1,4 +1,4 @@
-# prism-ios
+# Prism
 Prism image resizer iOS library that builds prism image resizer URLs.
 
 There are two ways to set a Prism URL. First one is by using prismURL function of URL extension. Second option is that using

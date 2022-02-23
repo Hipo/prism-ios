@@ -23,18 +23,20 @@ public extension URL {
     /// - parameter frameBackgroundColor: String.
     ///
     /// - returns: The created `URL` from PrismURL.
-    func prismURL(quality: ImageQuality = .high,
-                  expectedSize: CGSize = .zero,
-                  resizeMode: ImageResizeMode = .crop,
-                  imageType: ImageType = .png,
-                  cropRect: CGRect = .zero,
-                  premultiplied: Bool = true,
-                  preservedRatio: Bool? = nil,
-                  gravity: Gravity? = nil,
-                  frameBackgroundColor: String? = nil
+    func prismURL(
+        quality: ImageQuality = .high,
+        expectedSize: CGSize = .zero,
+        resizeMode: ImageResizeMode = .crop,
+        imageType: ImageType = .png,
+        cropRect: CGRect = .zero,
+        premultiplied: Bool = true,
+        preservedRatio: Bool? = nil,
+        gravity: Gravity? = nil,
+        frameBackgroundColor: String? = nil
     ) -> URL? {
         let prismURL = PrismURL(baseURL: self)
-        return prismURL.setImageQuality(quality)
+        return prismURL
+            .setImageQuality(quality)
             .setExpectedImageSize(expectedSize)
             .setResizeMode(resizeMode)
             .setCropRect(cropRect)
