@@ -1,5 +1,5 @@
 //
-//  PrismOutputGravity.swift
+//  Gravity.swift
 //  Prism
 //
 //  Created by Göktuğ Berk Ulu on 9.09.2019.
