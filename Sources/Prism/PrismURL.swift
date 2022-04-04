@@ -19,8 +19,8 @@ public class PrismURL: NSObject {
     /// Sets the output size of image. Accepts CGSize with width and height as parameter. Default value of the parameter is 320x320.
     var expectedSize = CGSize.zero
     
-    /// Sets the resize mode of an image. Default value is crop.
-    var resizeMode = ImageResizeMode.crop
+    /// Sets the resize mode of an image. Default value is nil.
+    var resizeMode: ImageResizeMode?
     
     /// Determines the rectange area that will be cropped according to resize mode. Receives CGRect as parameter.
     var cropRect = CGRect.zero
@@ -91,9 +91,11 @@ extension PrismURL {
         if expectedSize.width == 0 && expectedSize.height == 0 {
             return nil
         }
-        
-        let resizeQueryItem = URLQueryItem(name: PrismConstants.resizeMode, value: resizeMode.rawValue)
-        queryParameters.append(resizeQueryItem)
+
+        if let resizeMode = resizeMode {
+            let resizeQueryItem = URLQueryItem(name: PrismConstants.resizeMode, value: resizeMode.rawValue)
+            queryParameters.append(resizeQueryItem)
+        }
         
         let qualityQueryItem = URLQueryItem(name: PrismConstants.quality, value: quality.rawValue)
         queryParameters.append(qualityQueryItem)
