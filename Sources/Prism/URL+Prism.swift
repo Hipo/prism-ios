@@ -24,10 +24,10 @@ public extension URL {
     ///
     /// - returns: The created `URL` from PrismURL.
     func prismURL(
-        quality: ImageQuality = .high,
+        quality: ImageQuality = .normal,
         expectedSize: CGSize = .zero,
-        resizeMode: ImageResizeMode = .crop,
-        imageType: ImageType = .png,
+        resizeMode: ImageResizeMode? = nil,
+        imageType: ImageType? = nil,
         cropRect: CGRect = .zero,
         premultiplied: Bool = true,
         preservedRatio: Bool? = nil,

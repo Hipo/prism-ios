@@ -14,7 +14,7 @@ public class PrismURL: NSObject {
     var baseURL: URL?
     
     /// Sets the quality of image. Default value is high.
-    var quality = ImageQuality.high
+    var quality = ImageQuality.normal
     
     /// Sets the output size of image. Accepts CGSize with width and height as parameter. Default value of the parameter is 320x320.
     var expectedSize = CGSize.zero
@@ -26,7 +26,7 @@ public class PrismURL: NSObject {
     var cropRect = CGRect.zero
     
     /// Set type of output image. Options are.png and .jpg. Default value is png.
-    var imageType = ImageType.png
+    var imageType: ImageType?
     
     /// Determines whether ratio of the image will be preserved while resizing or not. Default value is nil.
     var isPreservingRatio: Bool?
@@ -70,10 +70,12 @@ extension PrismURL {
         
         var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
         var queryParameters = [URLQueryItem]()
-        
-        let imageTypeQueryItem = URLQueryItem(name: PrismConstants.type, value: imageType.rawValue)
-        queryParameters.append(imageTypeQueryItem)
-        
+
+        if let imageType = imageType {
+            let imageTypeQueryItem = URLQueryItem(name: PrismConstants.type, value: imageType.rawValue)
+            queryParameters.append(imageTypeQueryItem)
+        }
+
         if let width = scaleWidthOfOutputImage() {
             let widthQueryItem = URLQueryItem(name: PrismConstants.width, value: width)
             queryParameters.append(widthQueryItem)
@@ -203,7 +205,7 @@ extension PrismURL {
     /// - parameter resizeMode: ImageResizeMode. resizeMode value from ImageResizeMode enum.
     ///
     /// - returns: PrismURL with resize mode.
-    public func setResizeMode(_ resizeMode: ImageResizeMode) -> PrismURL {
+    public func setResizeMode(_ resizeMode: ImageResizeMode?) -> PrismURL {
         self.resizeMode = resizeMode
         return self
     }
@@ -223,7 +225,7 @@ extension PrismURL {
     /// - parameter imageType: ImageType. imageType value from ImageType enum.
     ///
     /// - returns: PrismURL with image type.
-    public func setImageType(_ imageType: ImageType) -> PrismURL {
+    public func setImageType(_ imageType: ImageType?) -> PrismURL {
         self.imageType = imageType
         return self
     }
