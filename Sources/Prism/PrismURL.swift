@@ -31,8 +31,8 @@ public class PrismURL: NSObject {
     /// Determines whether ratio of the image will be preserved while resizing or not. Default value is nil.
     var isPreservingRatio: Bool?
     
-    /// Configures the png image with transparent background. Default value is true.
-    var isPremultiplied = true
+    /// Configures the png image with transparent background. Default value is nil.
+    var isPremultiplied: Bool?
     
     /// Decides crop focus wit options top left and center. Default value is nil.
     var gravity: Gravity?
@@ -120,9 +120,11 @@ extension PrismURL {
             let isPreservingRatioQueryItem = URLQueryItem(name: PrismConstants.ratioPreservation, value: isPreservingRatio ? "1" : "0")
             queryParameters.append(isPreservingRatioQueryItem)
         }
-        
-        let isPremultipliedQueryItem = URLQueryItem(name: PrismConstants.premultiplied, value: isPremultiplied ? "1" : "0")
-        queryParameters.append(isPremultipliedQueryItem)
+
+        if let isPremultiplied = isPremultiplied {
+            let isPremultipliedQueryItem = URLQueryItem(name: PrismConstants.premultiplied, value: isPremultiplied ? "1" : "0")
+            queryParameters.append(isPremultipliedQueryItem)
+        }
         
         if let gravity = gravity {
             let gravityQueryItem = URLQueryItem(name: PrismConstants.gravity, value: gravity.rawValue)
@@ -245,7 +247,7 @@ extension PrismURL {
     /// - parameter premultiplied: Bool.
     ///
     /// - returns: PrismURL with premultiplied value.
-    public func setPremultiplied(_ premultiplied: Bool) -> PrismURL {
+    public func setPremultiplied(_ premultiplied: Bool?) -> PrismURL {
         self.isPremultiplied = premultiplied
         return self
     }

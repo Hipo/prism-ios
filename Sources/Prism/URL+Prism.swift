@@ -29,7 +29,7 @@ public extension URL {
         resizeMode: ImageResizeMode? = nil,
         imageType: ImageType? = nil,
         cropRect: CGRect = .zero,
-        premultiplied: Bool = true,
+        premultiplied: Bool? = nil,
         preservedRatio: Bool? = nil,
         gravity: Gravity? = nil,
         frameBackgroundColor: String? = nil
